@@ -1,0 +1,63 @@
+\documentclass{article} 
+\usepackage[<!config.Appearance.paper_size>, total={<!config.Appearance.paper_margins[0]>, <!config.Appearance.paper_margins[1]>}]{geometry}
+%\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+%\usepackage[T1]{fontenc}
+\usepackage{cjhebrew}
+\usepackage{graphicx}
+\usepackage{enumitem,xcolor}
+\usepackage{ragged2e}
+\usepackage[babel=true]{microtype}%%% 
+\usepackage{polyglossia} %This is the package that gives access to fonts.
+
+\setdefaultlanguage{hebrew}  %this makes the titles RTL, switch these if you write mostly in English
+\setmainlanguage[numerals=hebrew]{hebrew}
+\setotherlanguage{<!lang>}  
+\newfontfamily\hebrewfont[Script=Hebrew]{<!config.Fonts.font_family_heb>} %This font will work in Overleaf, Linux and Mac installs, if you're running windows you'd need to pick the right ones
+\newfontfamily\hebrewfontsf[Script=Hebrew]{<!config.Fonts.font_family_heb>}
+
+\newfontfamily\<!lang>font[Script=Latin]{<!config.Fonts.font_family_lat>}
+
+\setenumerate[1]{label=\texthebrew{\protect\hebrewnumeral{\value{enumi}}}}
+\renewcommand{\thesection}{\Large\color{black}פרק \color{<!config.Appearance.enum_color>}\arabic{section}}
+
+ %notice the \textenglish command here. This is because otherwise the RTL would screw up the parenthesis 
+\title{\Huge <!title>}
+\date{}
+
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=100
+\hbadness=100
+\sloppy
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+\setcounter{page}{1}
+
+{% for chapter in chapters %}
+    \newpage
+    \section{}
+    \begin{enumerate}[label=\<!config.Appearance.enum_size>\color{<!config.Appearance.enum_color>}\theenumi,leftmargin=-0.2in, rightmargin=-0.2in]
+    {% for verse in chapter %}
+    \itemsep 0pt
+    \item
+    \begin{justify}
+            \noindent\<!config.Appearance.font_size_heb>\texthebrew{\noindent <!verse.he> }
+   
+    \end{justify}
+
+
+{% if verse.pl %}
+\justifying\raggedright\noindent\<!config.Appearance.font_size_lat>\text<!lang>{\noindent <!verse.pl> }
+{% endif %}
+\nopagebreak
+    {% endfor %}
+\end{enumerate}
+
+{% endfor %}
+
+\end{document}
