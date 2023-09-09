@@ -1,27 +1,27 @@
 \documentclass{article} 
-\usepackage[<!config.Appearance.paper_size>, total={<!config.Appearance.paper_margins[0]>, <!config.Appearance.paper_margins[1]>}]{geometry}
-%\usepackage[utf8]{inputenc}
+\usepackage[<!config.Appearance.paper_size>, margin=<!config.Appearance.paper_margin>]{geometry}
 \usepackage{fontspec}
-%\usepackage[T1]{fontenc}
+\usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{cjhebrew}
 \usepackage{graphicx}
 \usepackage{enumitem,xcolor}
 \usepackage{ragged2e}
-\usepackage[babel=true]{microtype}%%% 
-\usepackage{polyglossia} %This is the package that gives access to fonts.
+\usepackage[babel=true]{microtype}
+\usepackage{polyglossia} 
 
-\setdefaultlanguage{hebrew}  %this makes the titles RTL, switch these if you write mostly in English
+\setdefaultlanguage{hebrew} 
 \setmainlanguage[numerals=hebrew]{hebrew}
+
 \setotherlanguage{<!lang>}  
-\newfontfamily\hebrewfont[Script=Hebrew]{<!config.Fonts.font_family_heb>} %This font will work in Overleaf, Linux and Mac installs, if you're running windows you'd need to pick the right ones
+\newfontfamily\hebrewfont[Script=Hebrew]{<!config.Fonts.font_family_heb>}
 \newfontfamily\hebrewfontsf[Script=Hebrew]{<!config.Fonts.font_family_heb>}
 
 \newfontfamily\<!lang>font[Script=Latin]{<!config.Fonts.font_family_lat>}
 
-\setenumerate[1]{label=\texthebrew{\protect\hebrewnumeral{\value{enumi}}}}
-\renewcommand{\thesection}{\Large\color{black}פרק \color{<!config.Appearance.enum_color>}\arabic{section}}
+\setenumerate[1]{label=\vcenter\hbox{\texthebrew{\protect\hebrewnumeral{\value{enumi}}}}}
 
- %notice the \textenglish command here. This is because otherwise the RTL would screw up the parenthesis 
+\renewcommand{\thesection}{\color{<!config.Appearance.enum_color>}\<!config.Appearance.chapter_enum_size> פרק \arabic{section}}
+
 \title{\Huge <!title>}
 \date{}
 
@@ -32,6 +32,7 @@
 \hbadness=100
 \sloppy
 
+
 \begin{document}
 
 \clearpage\maketitle
@@ -41,23 +42,21 @@
 {% for chapter in chapters %}
     \newpage
     \section{}
-    \begin{enumerate}[label=\<!config.Appearance.enum_size>\color{<!config.Appearance.enum_color>}\theenumi,leftmargin=-0.2in, rightmargin=-0.2in]
-    {% for verse in chapter %}
-    \itemsep 0pt
-    \item
-    \begin{justify}
-            \noindent\<!config.Appearance.font_size_heb>\texthebrew{\noindent <!verse.he> }
-   
-    \end{justify}
-
-
-{% if verse.pl %}
-\justifying\raggedright\noindent\<!config.Appearance.font_size_lat>\text<!lang>{\noindent <!verse.pl> }
-{% endif %}
-\nopagebreak
-    {% endfor %}
-\end{enumerate}
-
+    \begin{enumerate}[label=\<!config.Appearance.enum_size>\color{<!config.Appearance.enum_color>}\theenumi,leftmargin=-0.2in, rightmargin=-0.2in, itemsep=<!config.Appearance.enum_vsep>]
+        {% for verse in chapter %}
+        \nopagebreak\item
+                \begin{justify}
+                    \begin{hebrew}    
+                        \nopagebreak\<!config.Appearance.font_size_heb> \noindent <!verse.he>
+                    \end{hebrew}
+                {% if verse.pl %}
+                    \begin{<!lang>}
+                        \nopagebreak\<!config.Appearance.font_size_lat> \noindent <!verse.pl>
+                    \end{<!lang>}
+                {% endif %}
+                \end{justify}
+        {% endfor %}
+    \end{enumerate}
 {% endfor %}
 
 \end{document}

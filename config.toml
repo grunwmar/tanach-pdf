@@ -4,12 +4,14 @@ source_destination = "sources"
 
 [Fonts]
 font_family_heb = "Ezra SIL"
-font_family_lat = "CMU Concrete"
+font_family_lat = "Vollkorn"
 
 [Appearance]
-font_size_heb = "large"
-font_size_lat = "normalsize"
+font_size_heb = "Large"
+font_size_lat = "Large"
 paper_size = "a5paper"
-paper_margins = ["4in", "7in"]
-enum_color = "black"
-enum_size = "small"
+paper_margin = "55pt"
+enum_color = "RoyalPurple"
+enum_size = "normalsize"
+enum_vsep = "0pt"
+chapter_enum_size = "Huge"
