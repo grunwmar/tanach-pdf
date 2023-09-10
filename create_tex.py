@@ -9,7 +9,7 @@ import os
 
 NAME = os.environ["NAME"]
 LANG = os.environ["LANG"]
-LANGNAME = languages.get(alpha2=LANG).name
+LANGNAME = languages.get(alpha2=LANG).name if LANG != "" else None
 
 class DotDict(dict):
     __getattr__ = dict.__getitem__
@@ -49,9 +49,7 @@ try:
     with open(os.path.join(source_destination, f"{LANG}_{NAME}.json")) as fj2:
         js2 = json.load(fj2)
 except FileNotFoundError:
-    msg = errmsg_FileNotFound.format(lang=LANG, name=NAME)
-    print(msg)
-    sys.exit(1)
+    ...
 
 
 def main():
@@ -60,12 +58,15 @@ def main():
     for i, chapter_content in enumerate(js1["text"]):
         chapter = []
         for j, verse_content in enumerate(chapter_content):
-            chapter += [{"he": verse_content, "pl": js2["text"][i][j].strip()}]
+            if LANGNAME is None:
+                chapter += [{"he": verse_content.strip()}]
+            else:
+                chapter += [{"he": verse_content.strip(), LANG: js2["text"][i][j].strip()}]
         new_js["text"] += [chapter]
 
     content = template.render(title=js1["heTitle"], chapters=new_js["text"], config=config, lang=LANGNAME)
 
-    with open(f"tex/{NAME}.tex", "w") as f:
+    with open(f"tex/{NAME}_{LANG}.tex", "w") as f:
         f.write(content)
 
     os.system("bash create_pdf.sh")

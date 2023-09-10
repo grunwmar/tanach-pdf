@@ -11,8 +11,8 @@
 
 \setdefaultlanguage{hebrew} 
 \setmainlanguage[numerals=hebrew]{hebrew}
-
 \setotherlanguage{<!lang>}  
+
 \newfontfamily\hebrewfont[Script=Hebrew]{<!config.Fonts.font_family_heb>}
 \newfontfamily\hebrewfontsf[Script=Hebrew]{<!config.Fonts.font_family_heb>}
 
@@ -25,13 +25,11 @@
 \title{\Huge <!title>}
 \date{}
 
-
 \tolerance=1
 \emergencystretch=\maxdimen
 \hyphenpenalty=100
 \hbadness=100
 \sloppy
-
 
 \begin{document}
 
@@ -45,13 +43,13 @@
     \begin{enumerate}[label=\<!config.Appearance.enum_size>\color{<!config.Appearance.enum_color>}\theenumi,leftmargin=-0.2in, rightmargin=-0.2in, itemsep=<!config.Appearance.enum_vsep>]
         {% for verse in chapter %}
         \nopagebreak\item
-                \begin{justify}
-                    \begin{hebrew}    
-                        \nopagebreak\<!config.Appearance.font_size_heb> \noindent <!verse.he>
+        \begin{justify}
+            \begin{hebrew}    
+                \nopagebreak\<!config.Appearance.font_size_heb> \noindent <!verse.he>
                     \end{hebrew}
                 {% if verse.pl %}
-                    \begin{<!lang>}
-                        \nopagebreak\<!config.Appearance.font_size_lat> \noindent <!verse.pl>
+                \begin{<!lang>}
+                    \nopagebreak\<!config.Appearance.font_size_lat> \noindent <!verse.pl>
                     \end{<!lang>}
                 {% endif %}
                 \end{justify}

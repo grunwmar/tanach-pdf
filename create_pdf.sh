@@ -1,8 +1,8 @@
 cd tex
 echo "Running xelatex..."
-xelatex "$NAME".tex #&> /dev/null
+xelatex "$NAME"_"$LANG".tex #&> /dev/null
 echo "Done."
-mv "$NAME".pdf ../pdfs/"$NAME".pdf
+mv "$NAME"_"$LANG".pdf ../pdfs/"$NAME"_"$LANG".pdf
 cd ..
 
-cp pdfs/"$NAME".pdf "$EXPORT_DEST/$NAME".pdf
+cp pdfs/"$NAME"_"$LANG".pdf "$EXPORT_DEST/$NAME"_"$LANG".pdf
